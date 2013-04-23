@@ -24,18 +24,6 @@ module GakuForms
       end
     end
 
-    def remote_nested_form_for(object, options = {}, &block)
-      options[:validate] = true
-      options[:builder] = GakuForms::FormBuilders::ValidateNestedFormBuilder
-      options[:html] = {:class => 'remote-form form'}
-      options[:remote] = true
-      content_tag :div, class: "row-fluid" do
-        content_tag :div, class: "span12 well" do
-          nested_form_for(object, options, &block)
-        end
-      end
-    end
-
     def modal_form_for(object, options = {}, &block)
       options[:validate] = true
       options[:builder] = GakuForms::FormBuilders::ValidateFormBuilder
@@ -44,24 +32,12 @@ module GakuForms
       form_for(object, options, &block)
     end
 
-
     def normal_modal_form_for(object, options = {}, &block)
       options[:validate] = true
       options[:builder] = GakuForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:'data-type' => 'script', :class => 'normal-form'}
       form_for(object, options, &block)
     end
-
-
-
-    def modal_nested_form_for(object, options = {}, &block)
-      options[:validate] = true
-      options[:builder] = GakuForms::FormBuilders::ValidateNestedFormBuilder
-      options[:html] = {:'data-type' => 'script', :class => 'remote-form'}
-      options[:remote] = true
-      nested_form_for(object, options, &block)
-    end
-
 
     def buttons_for(object, options = {})
       object_name = get_class(object)
