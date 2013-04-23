@@ -14,7 +14,6 @@ formBuilder =
 
 
 window.ClientSideValidations.formBuilders["GakuForms::FormBuilders::ValidateFormBuilder"] = formBuilder
-window.ClientSideValidations.formBuilders["GakuForms::FormBuilders::ValidateNestedFormBuilder"] = formBuilder
 
 $ ->
 
