@@ -8,7 +8,7 @@ module GakuForms
 
         delegate :content_tag, to: :@template
 
-        def initialize(object_name, object, template, options, proc)
+        def initialize(*)
           super
           @help_tag, @help_css = if options.fetch(:help, '').to_sym == :block
             [:p, 'help-block']
