@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
   s.add_dependency 'client_side_validations'
+  s.add_dependency 'rails'
 end
