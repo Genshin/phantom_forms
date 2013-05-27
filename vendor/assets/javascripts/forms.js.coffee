@@ -13,11 +13,11 @@ formBuilder =
     element.data "valid", true
 
 
-window.ClientSideValidations.formBuilders["GakuForms::FormBuilders::ValidateFormBuilder"] = formBuilder
+window.Rails4ClientSideValidations.formBuilders["GakuForms::FormBuilders::ValidateFormBuilder"] = formBuilder
 
 $ ->
 
-  window.ClientSideValidations.callbacks.element.fail = (element, message, callback) ->
+  window.Rails4ClientSideValidations.callbacks.element.fail = (element, message, callback) ->
     callback()
     if element.data("valid") isnt false
       element.parent().parent().addClass "error"
