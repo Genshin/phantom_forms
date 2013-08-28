@@ -57,7 +57,12 @@ module GakuForms
     private
 
     def get_class(object)
-      object.class.to_s.underscore.dasherize.split('/').last
+      object_class_name = object.class.to_s.underscore.dasherize.split('/').last
+      if object_class_name.include? '-decorator'
+        object_class_name.split('-decorator').first
+      else
+        object_class_name
+      end
     end
 
   end
