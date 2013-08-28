@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'gaku_forms'
-  s.version     = '0.1.2'
+  s.version     = '0.1.3'
   s.summary     = 'Gaku Forms'
   s.description = ''
   s.required_ruby_version = '>= 1.8.7'
