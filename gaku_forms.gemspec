@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
   s.add_dependency 'rails4_client_side_validations'
   s.add_dependency 'rails'
+  s.add_dependency 'gaku_helpers', '~> 0.0.6'
 end
