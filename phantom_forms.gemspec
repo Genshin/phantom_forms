@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
   s.add_dependency 'rails4_client_side_validations'
   s.add_dependency 'rails'
-  s.add_dependency 'phantom_helpers', '~> 0.0.6', github: 'Genshin/phantom_helpers'
+  s.add_dependency 'phantom_helpers', '~> 0.0.6'
 end
