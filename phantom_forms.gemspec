@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.name        = 'phantom_forms'
   s.version     = '0.1.5'
   s.summary     = 'Phantom Forms'
-  s.description = ''
+  s.description = 'rails helpers for bootstrap 3'
   s.required_ruby_version = '>= 1.8.7'
 
   s.author            = ['Vassil Kalkov', 'Rei Kagetsuki', 'Nakaya Yukiharu']
