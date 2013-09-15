@@ -6,7 +6,7 @@ module PhantomForms
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:class => 'remote-form form'}
       options[:remote] = true
-      content_tag :div, class: "row-fluid" do
+      content_tag :div, class: "row" do
         content_tag :div, class: "span12 well" do
           form_for(object, options, &block)
         end
@@ -17,7 +17,7 @@ module PhantomForms
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:class => 'normal-form form'}
-      content_tag :div, class: "row-fluid" do
+      content_tag :div, class: "row" do
         content_tag :div, class: "span12 well" do
           form_for(object, options, &block)
         end
@@ -46,8 +46,8 @@ module PhantomForms
       locale_name =  object_name.underscore
       locale = options[:label] || t("#{locale_name}.save")
 
-      content_tag :div, :class => 'row-fluid' do
-        content_tag :div, :class => 'span12' do
+      content_tag :div, :class => 'row' do
+        content_tag :div, :class => 'col-md-12' do
           concat submit_button( locale , :id => "submit-#{object_class}-button")
           concat link_to_cancel( :id => "cancel-#{object_class}-link")
         end
@@ -61,8 +61,8 @@ module PhantomForms
       locale_name =  object_name.underscore
       locale = options[:label] || t("#{locale_name}.save")
 
-      content_tag :div, :class => 'row-fluid' do
-        content_tag :div, :class => 'span12' do
+      content_tag :div, :class => 'row' do
+        content_tag :div, :class => 'col-md-12' do
           concat submit_button( locale , :id => "submit-#{object_class}-button")
           concat link_to_modal_cancel( :id => "cancel-#{object_class}-link")
         end
