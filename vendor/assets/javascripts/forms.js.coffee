@@ -13,7 +13,7 @@ formBuilder =
     element.data "valid", true
 
 
-window.Rails4ClientSideValidations.formBuilders["GakuForms::FormBuilders::ValidateFormBuilder"] = formBuilder
+window.Rails4ClientSideValidations.formBuilders["PhantomForms::FormBuilders::ValidateFormBuilder"] = formBuilder
 
 $ ->
 

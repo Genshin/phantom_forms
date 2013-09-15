@@ -1,4 +1,4 @@
-module GakuForms
+module PhantomForms
   module FormBuilders
     class ValidateFormBuilder < ActionView::Helpers::FormBuilder
 

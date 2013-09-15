@@ -1,9 +1,9 @@
-module GakuForms
+module PhantomForms
   module Helper
 
     def remote_form_for(object, options = {}, &block)
       options[:validate] = true
-      options[:builder] = GakuForms::FormBuilders::ValidateFormBuilder
+      options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:class => 'remote-form form'}
       options[:remote] = true
       content_tag :div, class: "row-fluid" do
@@ -15,7 +15,7 @@ module GakuForms
 
     def normal_form_for(object, options = {}, &block)
       options[:validate] = true
-      options[:builder] = GakuForms::FormBuilders::ValidateFormBuilder
+      options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:class => 'normal-form form'}
       content_tag :div, class: "row-fluid" do
         content_tag :div, class: "span12 well" do
@@ -26,7 +26,7 @@ module GakuForms
 
     def modal_form_for(object, options = {}, &block)
       options[:validate] = true
-      options[:builder] = GakuForms::FormBuilders::ValidateFormBuilder
+      options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:'data-type' => 'script', :class => 'remote-form'}
       options[:remote] = true
       form_for(object, options, &block)
@@ -34,7 +34,7 @@ module GakuForms
 
     def normal_modal_form_for(object, options = {}, &block)
       options[:validate] = true
-      options[:builder] = GakuForms::FormBuilders::ValidateFormBuilder
+      options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:'data-type' => 'script', :class => 'normal-form'}
       form_for(object, options, &block)
     end
