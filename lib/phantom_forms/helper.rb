@@ -46,11 +46,16 @@ module PhantomForms
       locale_name =  object_name.underscore
       locale = options[:label] || t("#{locale_name}.save")
 
+      tags = []
+
       content_tag :div, :class => 'row' do
-        content_tag :div, :class => 'col-md-12' do
+        tags << content_tag(:div, :class => 'col-md-6') do
           concat submit_button( locale , :id => "submit-#{object_class}-button")
+        end
+        tags << content_tag(:div, :class => 'col-md-6') do
           concat link_to_cancel( :id => "cancel-#{object_class}-link")
         end
+        tags.join.html_safe
       end
     end
 

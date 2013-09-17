@@ -20,12 +20,12 @@ module PhantomForms
         FORM_HELPERS.each do |method_name|
           define_method(method_name) do |name, *args|
             options = args.extract_options!.symbolize_keys!
-            content_tag :div, class: "control-group"  do
+            content_tag :div, class: "form-group"  do
               label(name, options[:label], class: 'control-label') +
               content_tag(:div, class: 'controls') do
                 help = object.errors[name].any? ? object.errors[name].join(', ') : options[:help]
                 help = content_tag(@help_tag, class: @help_css) { help } if help
-                options[:class] = options[:class].to_s + " span12"
+                options[:class] = options[:class].to_s + " form-control"
                 args << options.except(:label, :help)
                 super(name, *args) + help
               end
