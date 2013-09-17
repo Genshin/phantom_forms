@@ -1,14 +1,24 @@
 module PhantomForms
   module Helper
 
-    def remote_form_for(object, options = {}, &block)
+    def remote_form_for(object, options = {}, panel_title = nil, &block)
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
-      options[:html] = {:class => 'remote-form form'}
       options[:remote] = true
-      content_tag :div, class: "row" do
-        content_tag :div, class: "span12 well" do
-          form_for(object, options, &block)
+      content_tag :div, class: "col-md-12" do
+        content_tag :div, class: "panel panel-primary" do
+          [
+            if panel_title
+              content_tag :div, class: "panel-heading" do
+                content_tag :h3, class: "panel-title" do
+                  panel_title
+                end
+              end
+            end,
+            content_tag(:div, class: "panel-body") do
+              form_for(object, options, &block)
+            end
+          ].join.html_safe
         end
       end
     end
@@ -46,16 +56,15 @@ module PhantomForms
       locale_name =  object_name.underscore
       locale = options[:label] || t("#{locale_name}.save")
 
-      tags = []
-
       content_tag :div, :class => 'row' do
-        tags << content_tag(:div, :class => 'col-md-6') do
-          concat submit_button( locale , :id => "submit-#{object_class}-button")
-        end
-        tags << content_tag(:div, :class => 'col-md-6') do
-          concat link_to_cancel( :id => "cancel-#{object_class}-link")
-        end
-        tags.join.html_safe
+        [
+          content_tag(:div, :class => 'col-md-6') do
+            concat submit_button( locale , :id => "submit-#{object_class}-button")
+          end,
+          content_tag(:div, :class => 'col-md-6') do
+            concat link_to_cancel( :id => "cancel-#{object_class}-link")
+          end
+        ].join.html_safe
       end
     end
 
