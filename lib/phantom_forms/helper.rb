@@ -5,6 +5,7 @@ module PhantomForms
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:remote] = true
+      options[:html] = {:class => 'remote-form form'}
       content_tag :div, class: "col-md-12" do
         content_tag :div, class: "well" do
           form_for(object, options, &block)
@@ -16,22 +17,22 @@ module PhantomForms
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:remote] = true
-      content_tag :div, class: "panel panel-primary" do
-        [
-          if panel_title
-            content_tag :div, class: "panel-heading" do
-              content_tag :h3, class: "panel-title" do
-                panel_title
+      options[:html] = {:class => 'remote-form form'}
+      content_tag :div, class: "col-md-12" do
+        content_tag :div, class: "panel panel-primary" do
+          [
+            if panel_title
+              content_tag :div, class: "panel-heading" do
+                content_tag :h3, class: "panel-title" do
+                  panel_title
+                end
               end
+            end,
+            content_tag(:div, class: "panel-body") do
+              form_for(object, options, &block)
             end
-          end,
-          content_tag(:div, class: "panel-body") do
-            form_for(object, options, &block)
-          end,
-          content_tag(:div, class: "panel-footer") do
-            buttons_for object
-          end
-        ].join.html_safe
+          ].join.html_safe
+        end
       end
     end
 
