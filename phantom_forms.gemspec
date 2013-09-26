@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'phantom_forms'
-  s.version     = '0.1.5'
+  s.version     = '0.1.6'
   s.summary     = 'Phantom Forms'
   s.description = 'rails helpers for bootstrap 3'
   s.licenses = ['GNU GPL-3', 'AGPL-3']
