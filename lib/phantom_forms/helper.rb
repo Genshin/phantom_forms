@@ -41,7 +41,7 @@ module PhantomForms
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:class => 'normal-form form'}
       content_tag :div, class: "row" do
-        content_tag :div, class: "span12 well" do
+        content_tag :div, class: "col-md-12" do
           form_for(object, options, &block)
         end
       end
