@@ -7,31 +7,9 @@ module PhantomForms
       options[:remote] = true
       options[:html] = {:class => 'remote-form form'}
       content_tag :div, class: "col-md-12" do
-        content_tag :div, class: "well" do
-          form_for(object, options, &block)
-        end
-      end
-    end
-
-    def remote_form_panel_for(object, panel_title = nil, options = {}, &block)
-      options[:validate] = true
-      options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
-      options[:remote] = true
-      options[:html] = {:class => 'remote-form form'}
-      content_tag :div, class: "col-md-12" do
         content_tag :div, class: "panel panel-primary" do
-          [
-            if panel_title
-              content_tag :div, class: "panel-heading" do
-                content_tag :h3, class: "panel-title" do
-                  panel_title
-                end
-              end
-            end,
-            content_tag(:div, class: "panel-body") do
-              form_for(object, options, &block)
-            end
-          ].join.html_safe
+          concat(form_title(options[:title])) if options[:title]
+          concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
         end
       end
     end
@@ -105,6 +83,14 @@ module PhantomForms
         object_class_name.split('-decorator').first
       else
         object_class_name
+      end
+    end
+
+    def form_title(title)
+      content_tag :div, class: "panel-heading" do
+        content_tag :h3, class: "panel-title" do
+          title
+        end
       end
     end
 
