@@ -6,9 +6,14 @@ module PhantomForms
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:remote] = true
       options[:html] = {:class => 'remote-form form'}
+
+      object_name = get_class(extract_object(object))
+      object_class = options[:resource] ||  object_name
+      label = options[:label] || t("#{object_name.underscore}.singular")
+
       content_tag :div, class: "col-md-12" do
         content_tag :div, class: "panel panel-primary" do
-          concat(form_title(options[:title])) if options[:title]
+          concat(form_title(label, slide_form_close_button(object_class)))
           concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
         end
       end
@@ -25,12 +30,23 @@ module PhantomForms
       end
     end
 
+
     def modal_form_for(object, options = {}, &block)
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:'data-type' => 'script', :class => 'remote-form'}
       options[:remote] = true
-      form_for(object, options, &block)
+
+      object_name = get_class(extract_object(object))
+      object_class = options[:resource] ||  object_name
+      label = options[:label] || t("#{object_name.underscore}.singular")
+
+      content_tag :div, class: "col-md-12 alert-dismissable" do
+        content_tag :div, class: "panel panel-primary" do
+          concat(form_title(label, modal_close_button))
+          concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
+        end
+      end
     end
 
     def normal_modal_form_for(object, options = {}, &block)
@@ -42,40 +58,19 @@ module PhantomForms
 
     def buttons_for(object, options = {})
       object_name = get_class(object)
-      object_class = options[:nested_id] ||  object_name
+      object_class = options[:resource] ||  object_name
 
       locale_name =  object_name.underscore
       locale = options[:label] || t("#{locale_name}.save")
-
-      content_tag :div, :class => 'row' do
-        [
-          content_tag(:div, :class => 'col-md-9') do
-            concat submit_button( locale , :id => "submit-#{object_class}-button")
-          end,
-          content_tag(:div, :class => 'col-md-3') do
-            concat link_to_cancel( :id => "cancel-#{object_class}-link")
-          end
-        ].join.html_safe
-      end
-    end
-
-    def modal_buttons_for(object, options = {})
-      object_name = get_class(object)
-      object_class = options[:nested_id] ||  object_name
-
-      locale_name =  object_name.underscore
-      locale = options[:label] || t("#{locale_name}.save")
-
-      content_tag :div, :class => 'row' do
-        content_tag :div, :class => 'col-md-12' do
-          concat submit_button( locale , :id => "submit-#{object_class}-button")
-          concat link_to_modal_cancel( :id => "cancel-#{object_class}-link")
-        end
+      content_tag :div, class: "panel-footer" do
+        submit_button(locale, :id => "submit-#{object_class}-button")
       end
     end
 
 
-    private
+    def modal_form_error(id)
+      content_tag :div, nil, :id => id
+    end
 
     def get_class(object)
       object_class_name = object.class.to_s.underscore.dasherize.split('/').last
@@ -86,11 +81,28 @@ module PhantomForms
       end
     end
 
-    def form_title(title)
+    private
+
+    def extract_object(object)
+      if object.kind_of?(Array)
+        object.last
+      else
+        object
+      end
+    end
+
+    def form_title(title, close_button)
       content_tag :div, class: "panel-heading" do
         content_tag :h3, class: "panel-title" do
-          title
+          concat close_button
+          concat(title ||= ' ')
         end
+      end
+    end
+
+    def slide_form_close_button(object_class)
+      content_tag :button, id: "close-#{object_class}-button", :class => 'close', :'data-dismiss' => 'modal', :'aria-hidden' => true do
+        "&times".html_safe
       end
     end
 
