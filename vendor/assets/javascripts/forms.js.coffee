@@ -19,6 +19,8 @@ manage_form_hiding = (resource) ->
   console.log resource
   resource_new_link = "#new-" + resource + "-link"
   resource_form = "#new-" + resource
+  console.log 'resource_new_link: ' + resource_new_link
+  console.log 'resource_form: ' + resource_form
   $(resource_new_link).show()
   $(resource_form).slide()
 
@@ -43,6 +45,12 @@ ready = ->
     if $(e.target).parents('.modal').length is 0
       resource = $(this).attr("id").replace("close-", "").replace("-button", "")
       manage_form_hiding(resource)
+
+  $(document).off('click', '.close-form').on "click",".close-form", (e) ->
+    console.log 'close-form click'
+    e.preventDefault()
+    resource = $(this).attr("id").replace("close-", "").replace("-button", "")
+    manage_form_hiding(resource)
 
 $(document).ready(ready)
 $(window).bind('page:change', ready)

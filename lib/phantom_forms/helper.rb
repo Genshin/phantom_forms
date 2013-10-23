@@ -11,11 +11,9 @@ module PhantomForms
       object_class = options[:resource] ||  object_name
       label = options[:label] || t("#{object_name.underscore}.singular")
 
-      content_tag :div, class: "col-md-12" do
-        content_tag :div, class: "panel panel-primary" do
-          concat(form_title(label, slide_form_close_button(object_class)))
-          concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
-        end
+      content_tag :div, class: "panel panel-primary" do
+        concat(panel_title(label, slide_form_close_button(object_class)))
+        concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
       end
     end
 
@@ -23,10 +21,14 @@ module PhantomForms
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:class => 'normal-form form'}
-      content_tag :div, class: "row" do
-        content_tag :div, class: "col-md-12" do
-          form_for(object, options, &block)
-        end
+
+      object_name = get_class(extract_object(object))
+      object_class = options[:resource] ||  object_name
+      label = options[:label] || t("#{object_name.underscore}.singular")
+
+      content_tag :div, class: "panel panel-primary" do
+        concat(panel_title(label, slide_form_close_button(object_class))) unless label == 'nil'
+        concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
       end
     end
 
@@ -43,7 +45,7 @@ module PhantomForms
 
       content_tag :div, class: "col-md-12 alert-dismissable" do
         content_tag :div, class: "panel panel-primary" do
-          concat(form_title(label, modal_close_button))
+          concat(panel_title(label, modal_close_button))
           concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
         end
       end
@@ -53,7 +55,15 @@ module PhantomForms
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:html] = {:'data-type' => 'script', :class => 'normal-form'}
-      form_for(object, options, &block)
+
+      object_name = get_class(extract_object(object))
+      object_class = options[:resource] ||  object_name
+      label = options[:label] || t("#{object_name.underscore}.singular")
+
+      content_tag :div, class: "panel panel-primary" do
+        concat(panel_title(label, modal_close_button))
+        concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
+      end
     end
 
     def buttons_for(object, options = {})
@@ -91,17 +101,8 @@ module PhantomForms
       end
     end
 
-    def form_title(title, close_button)
-      content_tag :div, class: "panel-heading" do
-        content_tag :h3, class: "panel-title" do
-          concat close_button
-          concat(title ||= ' ')
-        end
-      end
-    end
-
     def slide_form_close_button(object_class)
-      content_tag :button, id: "close-#{object_class}-button", :class => 'close', :'data-dismiss' => 'modal', :'aria-hidden' => true do
+      content_tag :button, id: "close-#{object_class}-button", :class => 'close-form' do
         "&times".html_safe
       end
     end
