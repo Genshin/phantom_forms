@@ -5,15 +5,15 @@ module PhantomForms
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:remote] = true
-      options[:html] = {:class => 'remote-form form'}
+      options[:html] = {class: 'remote-form form'}
 
-      object_name = get_class(extract_object(object))
-      object_class = options[:resource] ||  object_name
+      object_name = get_class extract_object(object)
+      object_class = options[:resource] || object_name
       label = options[:label] || t("#{object_name.underscore}.singular")
 
       content_tag :div, class: "panel panel-primary" do
-        concat(panel_title(label, slide_form_close_button(object_class)))
-        concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
+        concat panel_title(label, slide_form_close_button(object_class))
+        concat form_for(object, options, &block)
       end
     end
 
@@ -23,7 +23,7 @@ module PhantomForms
       options[:html] = {:class => 'normal-form form'}
 
       object_name = get_class(extract_object(object))
-      object_class = options[:resource] ||  object_name
+      object_class = options[:resource] || object_name
       label = options[:label] || t("#{object_name.underscore}.singular")
 
       content_tag :div, class: "panel panel-primary" do
@@ -32,7 +32,6 @@ module PhantomForms
       end
     end
 
-
     def modal_form_for(object, options = {}, &block)
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
@@ -40,7 +39,7 @@ module PhantomForms
       options[:remote] = true
 
       object_name = get_class(extract_object(object))
-      object_class = options[:resource] ||  object_name
+      object_class = options[:resource] || object_name
       label = options[:label] || t("#{object_name.underscore}.singular")
 
       content_tag :div, class: "col-md-12 alert-dismissable" do
@@ -57,7 +56,7 @@ module PhantomForms
       options[:html] = {:'data-type' => 'script', :class => 'normal-form'}
 
       object_name = get_class(extract_object(object))
-      object_class = options[:resource] ||  object_name
+      object_class = options[:resource] || object_name
       label = options[:label] || t("#{object_name.underscore}.singular")
 
       content_tag :div, class: "panel panel-primary" do
@@ -68,15 +67,12 @@ module PhantomForms
 
     def buttons_for(object, options = {})
       object_name = get_class(object)
-      object_class = options[:resource] ||  object_name
+      object_class = options[:resource] || object_name
 
       locale_name =  object_name.underscore
       locale = options[:label] || t("#{locale_name}.save")
-      content_tag :div, class: "panel-footer" do
-        submit_button(locale, :id => "submit-#{object_class}-button")
-      end
+      submit_button(locale, :id => "submit-#{object_class}-button")
     end
-
 
     def modal_form_error(id)
       content_tag :div, nil, :id => id
