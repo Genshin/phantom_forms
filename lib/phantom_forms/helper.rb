@@ -1,7 +1,7 @@
 module PhantomForms
   module Helper
 
-    def remote_form_for(object, options = {}, &block)
+    def panel_remote_form_for(object, options = {}, &block)
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
       options[:remote] = true
@@ -14,6 +14,22 @@ module PhantomForms
       content_tag :div, class: "panel panel-primary" do
         concat panel_title(label, slide_form_close_button(object_class))
         concat form_for(object, options, &block)
+      end
+    end
+
+    def remote_form_for(object, options = {}, &block)
+      options[:validate] = true
+      options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
+      options[:remote] = true
+      options[:html] = {:class => 'remote-form form'}
+
+      object_name = get_class(extract_object(object))
+      object_class = options[:resource] || object_name
+      label = options[:label] || t("#{object_name.underscore}.singular")
+
+      content_tag :div, class: "panel panel-primary" do
+        concat(panel_title(label, slide_form_close_button(object_class)))
+        concat(content_tag(:div, class: "panel-body") { form_for(object, options, &block) })
       end
     end
 
@@ -71,7 +87,11 @@ module PhantomForms
 
       locale_name =  object_name.underscore
       locale = options[:label] || t("#{locale_name}.save")
-      submit_button(locale, :id => "submit-#{object_class}-button")
+      content_tag :div, class: 'row' do
+        content_tag :div, class: 'col-xs-12' do
+          submit_button(locale, :id => "submit-#{object_class}-button")
+        end
+      end
     end
 
     def modal_form_error(id)
