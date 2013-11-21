@@ -1,22 +1,6 @@
 module PhantomForms
   module Helper
 
-    def panel_remote_form_for(object, options = {}, &block)
-      options[:validate] = true
-      options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
-      options[:remote] = true
-      options[:html] = {class: 'remote-form form'}
-
-      object_name = get_class extract_object(object)
-      object_class = options[:resource] || object_name
-      label = options[:label] || t("#{object_name.underscore}.singular")
-
-      content_tag :div, class: "panel panel-primary" do
-        concat panel_title(label, slide_form_close_button(object_class))
-        concat form_for(object, options, &block)
-      end
-    end
-
     def remote_form_for(object, options = {}, &block)
       options[:validate] = true
       options[:builder] = PhantomForms::FormBuilders::ValidateFormBuilder
