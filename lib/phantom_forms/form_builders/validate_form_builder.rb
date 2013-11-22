@@ -21,9 +21,15 @@ module PhantomForms
           define_method(method_name) do |name, *args|
             options = args.extract_options!.symbolize_keys!
             content_tag :div, class: "form-group"  do
-              label(name, options[:label], class: 'control-label') +
+              #Empty label for hstore inputs. Example: label: nil
+              label = options[:label].nil? ? content_tag(:span, nil) : label(name, options[:label], class: 'control-label')
+              label +
               content_tag(:div, class: 'controls') do
-                help = object.errors[name].any? ? object.errors[name].join(', ') : options[:help]
+                if object.respond_to?(:errors)
+                  help = object.errors[name].any? ? object.errors[name].join(', ') : options[:help]
+                else
+                  help = nil
+                end
                 help = content_tag(@help_tag, class: @help_css) { help } if help
                 options[:class] = options[:class].to_s + " form-control"
                 args << options.except(:label, :help)
