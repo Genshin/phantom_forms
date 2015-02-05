@@ -13,7 +13,7 @@ formBuilder =
     element.data "valid", true
 
 
-window.Rails4ClientSideValidations.formBuilders["PhantomForms::FormBuilders::ValidateFormBuilder"] = formBuilder
+window.ClientSideValidations.formBuilders["PhantomForms::FormBuilders::ValidateFormBuilder"] = formBuilder
 
 manage_form_hiding = (resource) ->
   console.log resource
@@ -27,7 +27,7 @@ manage_form_hiding = (resource) ->
 
 ready = ->
 
-  window.Rails4ClientSideValidations.callbacks.element.fail = (element, message, callback) ->
+  window.ClientSideValidations.callbacks.element.fail = (element, message, callback) ->
     callback()
     if element.data("valid") isnt false
       element.parent().parent().addClass "error"
